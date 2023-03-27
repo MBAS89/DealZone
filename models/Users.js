@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
     },
     providerName:{
         type: String
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false
     }
 },{timestamps : true});
 

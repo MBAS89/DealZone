@@ -1,4 +1,4 @@
-import dbConnect from '../../../lib/dbConnect';
+{/*import dbConnect from '../../../lib/dbConnect';
 import User from '../../../models/Users';
 import { hash } from 'bcryptjs';
 
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
     if(method === "GET"){
         try {
-            const { email, password, confirmPassword } = req.query.body
+            const { email, password, confirmPassword } = req.body
 
             const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
@@ -52,4 +52,4 @@ export default async function handler(req, res) {
 
     }
 }
-  
+*/}

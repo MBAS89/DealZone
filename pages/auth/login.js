@@ -6,35 +6,50 @@ import { ToastContainer, toast } from 'react-toastify';
 import { login_validate } from '../../lib/validate';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-
+import { useRouter } from 'next/router';
+import {signIn} from 'next-auth/react';
 const login = () => {
-    const formik = useFormik({
-        initialValues:{
-          email:'',
-          password:'',
-          confirmPassword:''
-        },
-        validate:login_validate,
-        onSubmit
-      })
-    const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
-  async function onSubmit(values,{ resetForm }){
-    setLoading(true)
-    try {
-      const res = await axios.get('http://localhost:3000/api/users/login', values)
-      console.log(res.data)
-      if(res.data.sucess){
-        toast.success(res.data.message)
-        setLoading(false);
-        resetForm();//this to reset the initial values after submit
-      }else{
-        toast.error(res.data.message)
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const formik = useFormik({
+    initialValues:{
+      email:'',
+      password:'',
+      confirmPassword:''
+    },
+    validate:login_validate,
+    onSubmit
+  })
+
+  async function onSubmit(values){
+
+    const redirectUrl = router.query.redirect || '/';
+    const status = await signIn('credentials',{
+      redirect:false,
+      email:values.email,
+      password:values.password,
+      confirmPassword:values.confirmPassword,
+      callbackUrl:redirectUrl
+    })
+
+    if(!status.ok){
+      if(status.error === "Email or Password dosen't match"){
+        toast.error(status.error)
       }
-    } catch (error) {
-      toast.error(error.response.data.message)
-      setLoading(false)
     }
+
+    if(status.ok) router.push(status.url)
+  }
+
+  const handleGoogleLogin = async () => {
+    const redirectUrl = router.query.redirect || '/';
+    signIn('google', { callbackUrl: redirectUrl });
   }
   return (
     <Layout>
