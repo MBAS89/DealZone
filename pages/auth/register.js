@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 const register = () => {
-
     const formik = useFormik({
         initialValues:{
           name:'',
@@ -23,6 +22,7 @@ const register = () => {
     const [loading, setLoading] = useState(false)
 
   async function onSubmit(values,{ resetForm }){
+
     setLoading(true)
     try {
       const res = await axios.post('http://localhost:3000/api/users/register', values)
