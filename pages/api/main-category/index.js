@@ -1,11 +1,13 @@
 import { getServerSession } from "next-auth/next"
 import { authOptions } from '../auth/[...nextauth]'
+import dbConnect from "@/lib/dbConnect"
 
 //schema models
 import MainCat from '../../../models/Categories'
 
 export default async function handler(req, res) {
   const { method } = req
+  await dbConnect()
 
   //const session = await getServerSession(req, res, authOptions)
 
