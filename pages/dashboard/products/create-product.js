@@ -84,7 +84,7 @@ const CreateProduct = () => {
   //Handle Add variant 
   const [variantOptionForm,setVariantOptionForm] = useState({})
 
-  const showVariantOptionForm = () =>{
+  const showVariantOptionForm = (index) => ()=>{
     setVariantOptionForm(variantOptionForm => ({
       ...variantOptionForm,
       [index]: !variantOptionForm[index],
@@ -98,8 +98,8 @@ const CreateProduct = () => {
     onSale:false,
   })
 
-  const handleVariantOptions = (index) =>() => {
-    variant[index].items[index].options.push(variantOptionObj)
+  const handleVariantOptions = (v,i) =>() => {
+    variant[v].items[i].options.push(variantOptionObj)
     setVariantOptionObj({
       name:"",
       qty:"",
@@ -154,30 +154,8 @@ const CreateProduct = () => {
     setVariantItemsForm({})
   }
   
-{/*
-  const [variantItemOptions, setVariantItemOptions] = useState([])
-  const addVaraintItemOptions = () => {
-    setVariantItemOptions([...variantItemOptions,variantItemOptionsObj])
-  }
 
-  const [variantItemOptionsObj,setVariantItemOptionsObj]=useState({
-    name:"",
-    quantity:"",
-    price:"",
-    oldPrice:"",
-    onSale:false
-  })
-
-  const handleVariantOptionsObj = (e) =>{
-    setVariantItemOptionsObj({
-    name:e.target.value,
-    quantity:e.target.value,
-    price:e.target.value,
-    oldPrice:e.target.value,
-    onSale:true,
-  })}
-*/}
-
+console.log(variantOptionObj + "lala")
 console.log(variant)
  
 
@@ -232,26 +210,6 @@ console.log(variant)
       <button type="button" onClick={addVaraint} className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Add Variant</button>
       </div>
       )}
-      
-
-      {/*
-      
-       
-        <div className='flex flex-wrap'>
-          <input type="text" placeholder='options name' value={productName} onChange={(e)=>{setProductName(e.target.value)}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-          <input type="text" placeholder='options price' value={productName} onChange={(e)=>{setProductName(e.target.value)}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-          <input type="text" placeholder='options old price' value={productName} onChange={(e)=>{setProductName(e.target.value)}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-          <input type="text" placeholder='options qantity' value={productName} onChange={(e)=>{setProductName(e.target.value)}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-          <label className="relative inline-flex items-center mr-5 cursor-pointer">
-            <input type="checkbox" value="" className="sr-only peer" checked/>
-            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
-            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">On Sale</span>
-          </label>
-        </div>
-      */}
-      
-    
-      
     </div>
     </form>
     <input  />
@@ -276,21 +234,41 @@ console.log(variant)
             </div>
             )}
           {v.items.map((item,index) => (
-            <div>{item.name}</div>
-          ))}
-          {variantOptionForm[index]&&(
-            <div className='flex flex-wrap'> 
-              <input type="text" placeholder='item name' value={variantOptionObj.name} onChange={(e)=>{setVariantOptionObj({...variantItemObj, name:e.target.value})}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-              <input type="text" placeholder='item price' value={variantOptionObj.price} onChange={(e)=>{setVariantOptionObj({...variantItemObj, price:e.target.value})}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
-              <input type="text" placeholder='item old price' value={variantOptionObj.oldPrice} onChange={(e)=>{setVariantOptionObj({...variantItemObj, oldPrice:e.target.value})}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
-              <label className="relative inline-flex items-center mr-5 cursor-pointer" >
-                  <input type="checkbox" value={variantItemObj.onSale} className="sr-only peer" onChange={()=>{setVariantOptionObj({...variantItemObj, onSale:!variantItemObj.onSale})}}/>
-                  <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
-                  <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 bg-orange-300">On Sale</span>
-              </label>
-              <button onClick={handleAddItemVariant(index)} type="button" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Submit Item</button>
-            </div>
-          )}
+            <div>
+              {item.name}
+              {item.price}
+              {item.oldPrice}
+              {item.onSale}
+              <button onClick={showVariantOptionForm(index)} type="button" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Add Options</button>
+            
+          
+              {variantOptionForm[index]&&(
+                <div className='flex flex-wrap'> 
+                  <input type="text" placeholder='option name' value={variantOptionObj.name} onChange={(e)=>{setVariantOptionObj({...variantOptionObj, name:e.target.value})}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                  <input type="text" placeholder='option quantity' value={variantOptionObj.qty} onChange={(e)=>{setVariantOptionObj({...variantOptionObj, qty:e.target.value})}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                  <input type="text" placeholder='option price' value={variantOptionObj.price} onChange={(e)=>{setVariantOptionObj({...variantOptionObj, price:e.target.value})}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
+                  <input type="text" placeholder='option old price' value={variantOptionObj.oldPrice} onChange={(e)=>{setVariantOptionObj({...variantOptionObj, oldPrice:e.target.value})}} className="block w-1/2 p-2.5 text-sm rounded-lg bg-gray-50 border border-gray-300 text-gray-900  focus:ring-teal-500 focus:border-teal-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
+                  <label className="relative inline-flex items-center mr-5 cursor-pointer" >
+                      <input type="checkbox" value={variantOptionObj.onSale} className="sr-only peer" onChange={()=>{setVariantOptionObj({...variantOptionObj, onSale:!variantOptionObj.onSale})}}/>
+                      <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
+                      <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 bg-orange-300">On Sale</span>
+                  </label>
+                  <button onClick={handleVariantOptions(index, index)} type="button" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Submit Option</button>
+                </div>
+              )}
+
+              {item.options.map((option)=> (
+                <div>
+                  {option.name}
+                  {option.qty}
+                  {option.price}
+                  {option.oldPrice}
+                  {option.onSale}
+                </div>
+              ))}
+
+          </div>
+        ))}
         </div>
       ))}
     </div>
@@ -319,3 +297,23 @@ async function getSignature() {
             <AiOutlinePlus/>
         </div>
  */}
+
+
+
+
+
+ /*
+
+
+
+
+    variant[index].items[index].options.push(variantOptionObj)
+    setVariantOptionObj({
+      name:"",
+      qty:"",
+      price:"",
+      oldPrice:"",
+      onSale:false,
+    })
+    setVariantOptionForm({})
+*/
