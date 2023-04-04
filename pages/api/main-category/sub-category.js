@@ -37,4 +37,16 @@ export default async function handler(req, res) {
     }
   
 
+
+    if(method === "GET"){
+      try {
+        const subCat = await SubCat.find().populate({
+          path: "category",
+        });
+        res.send(subCat)
+      } catch (error) {
+        res.send(error.message)
+      }
+    }
+    
 }

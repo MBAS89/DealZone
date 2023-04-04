@@ -1,4 +1,4 @@
-import {React,useCallback,useState} from 'react'
+import {React,useCallback,useState,useEffect} from 'react'
 import { useDropzone } from 'react-dropzone';
 //import { Image } from "cloudinary-react";
 import Image from 'next/image';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { AiOutlinePlus } from "react-icons/ai";
 
-const CreateProduct = () => {
+const CreateProduct = ({maincategory}) => {
 
   const [uploadedFiles,setUploadedFiles] = useState([])
 
@@ -55,7 +55,7 @@ const CreateProduct = () => {
     const [variant, setVariant] = useState([])
     const [ variantItem, setVariantItem ]= useState([])
     const [variantOption,setVariantOption] = useState([])
-
+    const [isSuccess,setIsSuccess] = useState(false)
   {/*const handleCreateProduct = async (e) => {
     e.preventDefault()
 
@@ -159,11 +159,19 @@ console.log(variantOptionObj + "lala")
 console.log(variant)
  
 
-  
-
-
-  
-
+useEffect(()=>{
+  const fecthing =  async () => {
+      try {
+          const res = await axios.get(`http://localhost:3000/api/main-category/sub-category`)
+          setProductCat(res.data)
+          setIsSuccess(false)
+      } catch (error) {
+          toast.error("Something went wrong!")
+          setIsSuccess(false)
+      }
+  }
+  fecthing()
+},[isSuccess])
 
 
   return (
@@ -179,8 +187,13 @@ console.log(variant)
         </div>
         <div className='bg-white w-1/3 p-10 ml-10 rounded-lg mb-10 drop-shadow-xl border border-gray-200'>
           <label className="block mb-2 font-medium text-gray-900 dark:text-white">Categories</label>
+          {maincategory.map((p)=>(
+                <div>{p.name}</div>
+              ))}
           <select value={productCat} onChange={(e)=>{setProductCat(e.target.value)}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option name="maincategory" value={productCat.maincategory}  onChange={(e)=>{setProductCat({maincategory:e.target.value})}}>Main Category</option>
+              {/*{productCat.map((maincat)=>(
+              <option name="maincategory">{maincat.name}</option>
+            ))} */} {/*onChange={(e)=>{setProductCat({maincategory:e.target.value})}}*/} {/*value={productCat.maincategory}*/}
             <option name="subcategory" value={productCat.subcategory} onChange={(e)=>{setProductCat({subcategory:e.target.value})}}>Sub Category</option>
             <option name="category" value={productCat.category} onChange={(e)=>{setProductCat({category:e.target.value})}}>Category</option>
           </select>
@@ -266,7 +279,6 @@ console.log(variant)
                   {option.onSale}
                 </div>
               ))}
-
           </div>
         ))}
         </div>
@@ -287,6 +299,21 @@ async function getSignature() {
   const { signature, timestamp } = data;
   return { signature, timestamp };
 }
+
+{/*
+export const getServerSideProps = async () =>{
+  const res = await axios.get('http://localhost:3000/api/main-category')
+ 
+  //const data = await response.json()
+  return {
+    props: {
+      maincategory:res.data,
+      subcategory:res.data
+    }, // will be passed to the page component as props
+  }
+}
+*/}
+
 {/* <h1>Product Name</h1>
         <input type='name'></input>
 

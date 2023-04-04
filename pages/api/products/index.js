@@ -18,7 +18,7 @@ export default async function handler(req, res) {
             })
     
             if(product){
-                return res.status(201).json({product, message: "Product Created Successfully "});
+                return res.status(201).json({product, message: "Product Created Successfully"});
             }else{
                 return res.status(201).json({message: "Somehing Went Wrong"});
             }   
