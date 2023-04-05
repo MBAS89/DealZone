@@ -56,6 +56,9 @@ const CreateProduct = ({maincategory}) => {
     const [ variantItem, setVariantItem ]= useState([])
     const [variantOption,setVariantOption] = useState([])
     const [isSuccess,setIsSuccess] = useState(false)
+    const [mainCategory, setMainCategory] = useState([]);
+    const [subCategory, setSubCategory] = useState([]);
+    const [category, setCategory] = useState([]);
   {/*const handleCreateProduct = async (e) => {
     e.preventDefault()
 
@@ -158,11 +161,11 @@ const CreateProduct = ({maincategory}) => {
 console.log(variantOptionObj + "lala")
 console.log(variant)
  
-
+{/*
 useEffect(()=>{
   const fecthing =  async () => {
       try {
-          const res = await axios.get(`http://localhost:3000/api/main-category/sub-category`)
+          const res = await axios.get(`http://localhost:3000/api/main-category`)
           setProductCat(res.data)
           setIsSuccess(false)
       } catch (error) {
@@ -173,6 +176,17 @@ useEffect(()=>{
   fecthing()
 },[isSuccess])
 
+*/}
+useEffect(() => {
+  const fetchData = async () => {
+    const response = await fetch('http://localhost:3000/api/main-category');
+    const data = await response.json();
+    setMainCategory(data);
+    setSubCategory(data);
+    setCategory(data);
+  };
+  fetchData();
+}, []);
 
   return (
   <div className='w-[80%] mx-auto'>
@@ -186,17 +200,37 @@ useEffect(()=>{
           <textarea value={productDesc} onChange={(e)=>{setProductDesc(e.target.value)}} rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your product description here..."></textarea>
         </div>
         <div className='bg-white w-1/3 p-10 ml-10 rounded-lg mb-10 drop-shadow-xl border border-gray-200'>
-          <label className="block mb-2 font-medium text-gray-900 dark:text-white">Categories</label>
-          {maincategory.map((p)=>(
-                <div>{p.name}</div>
+
+        
+        
+          <label className="block mb-2 font-medium text-gray-900 dark:text-white">Main Category</label>
+            <select id="maincategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              {mainCategory.map((item) => (
+                <option>{item.name}</option>
               ))}
-          <select value={productCat} onChange={(e)=>{setProductCat(e.target.value)}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </select>
+          
+            <label className="block mb-2 font-medium text-gray-900 dark:text-white">Sub Category</label>
+              <select id="maincategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              {subCategory.map((subItem) => (
+                  <option key={subItem._id}>{subItem.name}</option>
+                ))}
+              </select>
+{/*
+
+                {subCategory.map((subItem) => (
+                  <select id="subcategory" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option key={subItem._id}>{subItem.name}</option>
+                  </select>
+                ))}*/}
+           
+         {/* <select value={productCat} onChange={(e)=>{setProductCat(e.target.value)}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">*/}
               {/*{productCat.map((maincat)=>(
               <option name="maincategory">{maincat.name}</option>
             ))} */} {/*onChange={(e)=>{setProductCat({maincategory:e.target.value})}}*/} {/*value={productCat.maincategory}*/}
-            <option name="subcategory" value={productCat.subcategory} onChange={(e)=>{setProductCat({subcategory:e.target.value})}}>Sub Category</option>
-            <option name="category" value={productCat.category} onChange={(e)=>{setProductCat({category:e.target.value})}}>Category</option>
-          </select>
+            {/*<option name="subcategory" value={productCat.subcategory} onChange={(e)=>{setProductCat({subcategory:e.target.value})}}>Sub Category</option>
+            <option name="category" value={productCat.category} onChange={(e)=>{setProductCat({category:e.target.value})}}>Category</option>*/}
+         {/* </select>*/}
         </div>
       </div>
       <div className='bg-white drop-shadow-xl rounded-lg p-10 w-2/3 border border-gray-200'>
