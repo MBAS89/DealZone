@@ -34,5 +34,12 @@ export default async function handler(req, res) {
         }
     }
     
-
+    if(method === "GET"){
+      try {
+        const cat = await Cat.find()
+        res.send(cat)
+      } catch (error) {
+        res.send(error.message)
+      }
+    }
   }
